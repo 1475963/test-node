@@ -5,6 +5,7 @@ Behind this there is a MongoDB database hosted on https://mlab.com/<br />
 # Up and running
 * Get sources: https://github.com/1475963/test-node.git<br />
 * Install / update dependencies: "$> npm install"<br />
+* Set the environment variable "NODE_ENV" to "development"<br />
 * Run "$> npm start"<br />
 
 # Usage
