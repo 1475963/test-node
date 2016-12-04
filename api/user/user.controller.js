@@ -12,12 +12,19 @@ exports.index = function(req, res) {
   console.log('USER: index, query: ', req.query);
   console.log('USER: index, body: ', req.body);
   let query = {};
+
   if (req.query && req.query.name) {
     query.name = req.query.name;
+
+    User.findOneAsync(query, { _id: 0, __v: 0 })
+      .then(utils.responseWithResult(res))
+      .catch(utils.handleError(res));
   }
-  User.findAsync(query, { _id: 0, __v: 0 })
-    .then(utils.responseWithResult(res))
-    .catch(utils.handleError(res));
+  else {
+    User.findAsync(query)
+      .then(utils.responseWithResult(res))
+      .catch(utils.handleError(res));
+  }
 }
 
 /**
@@ -53,7 +60,7 @@ exports.update = function(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  User.findByIdAsync({ _id: req.params.id })
+  User.findByIdAsync(req.params.id)
     .then(utils.handleEntityNotFound(res))
     .then(utils.saveUpdates(req.body))
     .then(utils.responseWithResult(res))
